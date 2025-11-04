@@ -3,11 +3,13 @@ name: Build and Publish Electron App
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*.*.*'   # roda quando você criar uma tag, ex: v1.0.1
 
 jobs:
-  release:
+  build-linux:
+    name: Build Linux (AppImage)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,9 +20,30 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build and publish
+      - name: Build and publish (Linux)
+        run: npm run build -- -p always
+        env:
+          GH_TOKEN: ${{ secrets.GH_KEY_UPLOAD_RELEASES }}
+
+  build-windows:
+    name: Build Windows (NSIS)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and publish (Windows)
         run: npm run build -- -p always
         env:
           GH_TOKEN: ${{ secrets.GH_KEY_UPLOAD_RELEASES }}
