@@ -18,6 +18,10 @@
       "target": "nsis",
       "icon": "icone_executavel_arredondado.ico"
     },
+    "linux": {
+      "target": ["AppImage"],
+      "category": "Utility"
+    },
     "publish": [
       {
         "provider": "github",
