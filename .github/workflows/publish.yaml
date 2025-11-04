@@ -21,6 +21,6 @@ jobs:
         run: npm install
 
       - name: Build and publish
-        run: npm run dist -- -p always
+        run: npm run build -- -p always
         env:
           GH_TOKEN: ${{ secrets.GH_KEY_UPLOAD_RELEASES }}
