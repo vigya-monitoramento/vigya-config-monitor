@@ -10,13 +10,26 @@ let win;
 let tray;
 
 const createWindow = () => {
+  // Keep the standard frame so OS-provided minimize/close buttons remain.
+  // Hide the menu bar, disable maximize and resizing so only minimize and close are active.
   win = new BrowserWindow({
     width: 800,
     height: 600,
     icon: path.join(__dirname, './assets/icone_executavel_arredondado.png'),
+    autoHideMenuBar: true,
+    // On Windows these keep the maximize button from being active.
+    maximizable: false,
+    resizable: false,
   })
 
   win.loadFile('index.html')
+
+  // Ensure menu bar is not visible (double-safety).
+  try {
+    win.setMenuBarVisibility(false);
+  } catch (e) {
+    // ignore if method not available
+  }
 
   
 
@@ -30,6 +43,10 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
+  // Remove the default application menu so the window shows no menu/options
+  // but keep the tray context menu. This hides the menu bar on Windows.
+  Menu.setApplicationMenu(null);
+
   createWindow();
 
   let icon = nativeImage.createFromPath(path.join(__dirname, './assets/iconTemplate.png'));
