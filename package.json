@@ -21,8 +21,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "SEU_USUARIO",
-        "repo": "SEU_REPOSITORIO"
+        "owner": "vigya-monitoramento",
+        "repo": "vigya-config-monitor"
       }
     ]
   },
