@@ -34,7 +34,7 @@ export function WelcomeScreen() {
     }
     
     setCnpj(inputValue)
-    setCurrentScreen('setup')
+    setCurrentScreen('detection')
   }
 
   const handleKeyPress = (e) => {

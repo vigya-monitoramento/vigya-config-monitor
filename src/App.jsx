@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { AppProvider, useApp } from './context/AppContext'
 import { WelcomeScreen } from './components/WelcomeScreen'
+import { DetectionScreen } from './components/DetectionScreen'
 import { SetupScreen } from './components/SetupScreen'
 import './App.css'
 
@@ -23,6 +24,7 @@ function AppContent() {
   return (
     <div className="app-container">
       {currentScreen === 'welcome' && <WelcomeScreen />}
+     {currentScreen === 'detection' && <DetectionScreen />}
       {currentScreen === 'setup' && <SetupScreen />}
     </div>
   )

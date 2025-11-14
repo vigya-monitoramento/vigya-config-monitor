@@ -5,6 +5,7 @@ const AppContext = createContext()
 
 export function AppProvider({ children }) {
   const [cnpj, setCnpjState] = useState('')
+  const [intelbrasIP, setIntelbrasIPState] = useState('')
   const [currentScreen, setCurrentScreen] = useState('welcome')
   const [isLoading, setIsLoading] = useState(true)
 
@@ -14,6 +15,9 @@ export function AppProvider({ children }) {
     
     if (savedData && savedData.cnpj) {
       setCnpjState(savedData.cnpj)
+      if (savedData.intelbrasIP) {
+        setIntelbrasIPState(savedData.intelbrasIP)
+      }
       setCurrentScreen('setup')
     }
     
@@ -25,13 +29,25 @@ export function AppProvider({ children }) {
     setCnpjState(newCnpj)
     
     if (newCnpj) {
-      saveToStorage({ cnpj: newCnpj })
+      const savedData = loadFromStorage() || {}
+      saveToStorage({ ...savedData, cnpj: newCnpj })
+    }
+  }
+
+  // Wrapper para setIntelbrasIP que também salva no storage
+  const setIntelbrasIP = (newIP) => {
+    setIntelbrasIPState(newIP)
+    
+    if (newIP) {
+      const savedData = loadFromStorage() || {}
+      saveToStorage({ ...savedData, intelbrasIP: newIP })
     }
   }
 
   // Wrapper para logout que limpa o storage
   const logout = () => {
     setCnpjState('')
+    setIntelbrasIPState('')
     setCurrentScreen('welcome')
     clearStorage()
   }
@@ -39,6 +55,8 @@ export function AppProvider({ children }) {
   const value = {
     cnpj,
     setCnpj,
+    intelbrasIP,
+    setIntelbrasIP,
     currentScreen,
     setCurrentScreen,
     logout,
