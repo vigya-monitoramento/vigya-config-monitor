@@ -2,7 +2,7 @@ const { autoUpdater } = require('electron-updater');
 const path = require('path');
 
 
-const CHECK_INTERVAL = 30 * 60 * 1000; // 30 minutos
+const CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutos
 
 function startAutoUpdateCheck() {
   autoUpdater.checkForUpdatesAndNotify();

@@ -1,48 +1,38 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import { AppProvider, useApp } from './context/AppContext'
+import { WelcomeScreen } from './components/WelcomeScreen'
+import { SetupScreen } from './components/SetupScreen'
 import './App.css'
 
-function App() {
-  const [status, setStatus] = useState('Conectado ao Vigya Monitor')
+function AppContent() {
+  const { currentScreen, isLoading } = useApp()
 
   useEffect(() => {
-    // Seu código de inicialização aqui
     console.log('App React iniciado com sucesso!')
   }, [])
 
+  // Aguarda o carregamento dos dados do storage
+  if (isLoading) {
+    return <div className="app-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'white' }}>
+      <div style={{ textAlign: 'center', color: '#999' }}>
+        <div style={{ fontSize: '1.2rem', fontWeight: '500' }}>Carregando...</div>
+      </div>
+    </div>
+  }
+
   return (
     <div className="app-container">
-      <header className="app-header">
-        <h1>Vigya Control Monitor</h1>
-      </header>
-      
-      <main className="app-content">
-        <div className="status-box">
-          <h2>Status</h2>
-          <p>{status}</p>
-        </div>
-
-        <section className="info-section">
-          <h2>Bem-vindo ao Vigya Monitor</h2>
-          <p>Seu aplicativo agora está rodando com React! 🚀</p>
-          
-          <ul className="features">
-            <li>✅ Electron com React</li>
-            <li>✅ Hot reload em desenvolvimento</li>
-            <li>✅ Auto-update automático</li>
-            <li>✅ Build para Windows e Linux</li>
-          </ul>
-        </section>
-
-        <section className="tailscale-section">
-          <h3>TailScale Status</h3>
-          <p>Integração com TailScale ativa</p>
-        </section>
-      </main>
-
-      <footer className="app-footer">
-        <p>Vigya Control Monitor v1.0.4</p>
-      </footer>
+      {currentScreen === 'welcome' && <WelcomeScreen />}
+      {currentScreen === 'setup' && <SetupScreen />}
     </div>
+  )
+}
+
+function App() {
+  return (
+    <AppProvider>
+      <AppContent />
+    </AppProvider>
   )
 }
 
