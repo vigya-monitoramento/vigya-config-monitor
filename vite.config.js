@@ -5,12 +5,13 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   root: '.',
+  base: './',
   build: {
-    outDir: 'dist/renderer',
+    outDir: 'dist/ui',
     emptyOutDir: true,
   },
   server: {
-    port: 5173,
+    port: 3000,
     strictPort: false,
   },
 })

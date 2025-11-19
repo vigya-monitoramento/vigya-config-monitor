@@ -8,14 +8,26 @@
     "build": "vite build && electron-builder",
     "preview": "vite preview",
     "start": "electron .",
-    "start:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "start:dev": "concurrently \"vite\" \"wait-on http://localhost:3000 && electron .\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "build": {
     "appId": "com.vigya.monitor",
     "productName": "Vigya Control Monitor",
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist/ui",
+        "to": "dist/ui",
+        "filter": ["**/*"]
+      }
+    ],
     "directories": {
-      "output": "dist"
+      "output": "release",
+      "buildResources": "assets"
     },
     "win": {
       "target": "nsis",
